@@ -1,0 +1,43 @@
+# ============================================
+# CONFIGURACIÓN GLOBAL - TODOS LOS MICROSERVICIOS
+# Archivo: config-repo/application.yml
+# ============================================
+
+# Eureka Client (común para todos)
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+    instance-id: ${spring.application.name}:${server.port}
+
+# Actuator (común para todos)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Logging (común para todos)
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  level:
+    org.springframework.web: INFO
+    org.springframework.cloud: INFO
+
+# Jackson (común para todos)
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: America/Lima

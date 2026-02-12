@@ -1,0 +1,39 @@
+# ============================================
+# MS-SEGURIDAD - Configuración específica
+# Archivo: config-repo/ms-seguridad.yml
+# ============================================
+
+server:
+  port: 8084
+
+spring:
+  application:
+    name: ms-seguridad
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# JWT (Semana 5)
+jwt:
+  secret: optica-daw-secret-key-2024-microservicios-cibertec
+  expiration: 86400000  # 24 horas
+  refresh-expiration: 604800000  # 7 días
+
+logging:
+  level:
+    pe.edu.cibertec.seguridad: DEBUG

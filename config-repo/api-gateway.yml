@@ -1,0 +1,78 @@
+# ============================================
+# API-GATEWAY - Configuración específica
+# Archivo: config-repo/api-gateway.yml
+# ============================================
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+        # MS-SEGURIDAD
+        - id: ms-seguridad
+          uri: lb://ms-seguridad
+          predicates:
+            - Path=/api/auth/**, /api/usuarios/**, /api/roles/**
+
+        # MS-CATALOGO
+        - id: ms-catalogo
+          uri: lb://ms-catalogo
+          predicates:
+            - Path=/api/productos/**, /api/marcas/**, /api/categorias/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: catalogoCircuitBreaker
+                fallbackUri: forward:/fallback/catalogo
+
+        # MS-VENTAS
+        - id: ms-ventas
+          uri: lb://ms-ventas
+          predicates:
+            - Path=/api/carritos/**, /api/pedidos/**
+
+        # MS-CITAS
+        - id: ms-citas
+          uri: lb://ms-citas
+          predicates:
+            - Path=/api/citas/**, /api/servicios/**, /api/sucursales/**
+
+      # CORS
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins:
+              - "http://localhost:4200"
+              - "http://localhost:3000"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowed-headers: "*"
+            allow-credentials: true
+
+# Circuit Breaker
+resilience4j:
+  circuitbreaker:
+    instances:
+      catalogoCircuitBreaker:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

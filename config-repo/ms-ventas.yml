@@ -1,0 +1,42 @@
+# ============================================
+# MS-VENTAS - Configuración específica
+# Archivo: config-repo/ms-ventas.yml
+# ============================================
+
+server:
+  port: 8082
+
+spring:
+  application:
+    name: ms-ventas
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ventas_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# Feign
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+        logger-level: full
+
+logging:
+  level:
+    pe.edu.cibertec.ventas: DEBUG

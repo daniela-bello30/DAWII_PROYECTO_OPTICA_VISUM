@@ -1,0 +1,33 @@
+# ============================================
+# MS-CITAS - Configuración específica
+# Archivo: config-repo/ms-citas.yml
+# ============================================
+
+server:
+  port: 8083
+
+spring:
+  application:
+    name: ms-citas
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/citas_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+logging:
+  level:
+    pe.edu.cibertec.citas: DEBUG
