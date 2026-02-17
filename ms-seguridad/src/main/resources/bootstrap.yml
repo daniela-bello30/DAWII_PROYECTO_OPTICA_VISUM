@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: ms-seguridad
+  cloud:
+    config:
+      enabled: false  # Cambiar a true cuando tengas Config Server
+      uri: http://localhost:8888
+      fail-fast: false
