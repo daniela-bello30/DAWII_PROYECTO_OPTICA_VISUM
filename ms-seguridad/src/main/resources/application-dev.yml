@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_db
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Para desarrollo, recrea las tablas
+    show-sql: true
+
+logging:
+  level:
+    pe.edu.cibertec.seguridad: DEBUG
