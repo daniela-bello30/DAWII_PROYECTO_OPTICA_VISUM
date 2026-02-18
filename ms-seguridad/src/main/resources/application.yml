@@ -6,7 +6,7 @@ spring:
     name: ms-seguridad
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/auth_db
+    url: jdbc:postgresql://localhost:5432/auth_db?stringtype=unspecified
     username: postgres
     password: 1234
     driver-class-name: org.postgresql.Driver

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,6 +123,28 @@ public class AuthServiceImpl implements AuthService {
     public JwtResponse loginWithJwt(LoginRequest request) {
         log.info("Intento de login con JWT para email: {}", request.getEmail());
 
+        // ═══ AGREGADO TEMPORAL - DIAGNÓSTICO ═══
+        Usuario usuarioTest = usuarioRepository.findByEmail(request.getEmail()).orElse(null);
+        if (usuarioTest != null) {
+            log.info("═══════════════════════════════════════");
+            log.info("DIAGNÓSTICO COMPLETO:");
+            log.info("Email recibido: '{}'", request.getEmail());
+            log.info("Password recibido: '{}'", request.getPassword());
+            log.info("Password BD: '{}'", usuarioTest.getPassword());
+            log.info("Password BD longitud: {}", usuarioTest.getPassword().length());
+
+            // PRUEBA MANUAL
+            boolean manualMatch = passwordEncoder.matches(request.getPassword(), usuarioTest.getPassword());
+            log.info("¿passwordEncoder.matches() manual = {}?", manualMatch);
+
+            if (manualMatch) {
+                log.info("✓✓✓ PASSWORD CORRECTO - El problema es Spring Security");
+            } else {
+                log.info("✗✗✗ PASSWORD INCORRECTO - El problema es el hash");
+            }
+            log.info("═══════════════════════════════════════");
+        }
+        
         try {
             // Autenticar usuario
             Authentication authentication = authenticationManager.authenticate(
@@ -130,16 +154,21 @@ public class AuthServiceImpl implements AuthService {
                     )
             );
 
-            // Buscar usuario
+            /*Mantenerlo temporalmente*/
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            /*mantenerlo temporalmente*/
+
+
             Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new InvalidCredentialsException());
 
-            // Verificar que el usuario esté activo
+
             if (!usuario.getEstado()) {
                 throw new InvalidCredentialsException("Usuario inactivo");
             }
 
-            // Generar tokens
+
             String accessToken = jwtService.generateToken(
                     usuario.getEmail(),
                     usuario.getIdUsuario(),
@@ -148,7 +177,7 @@ public class AuthServiceImpl implements AuthService {
 
             String refreshToken = jwtService.generateRefreshToken(usuario.getEmail());
 
-            // Actualizar último acceso
+
             usuario.setUltimoAcceso(LocalDateTime.now());
             usuarioRepository.save(usuario);
 
