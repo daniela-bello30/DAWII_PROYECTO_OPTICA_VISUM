@@ -28,9 +28,11 @@ public class Rol {
     @Column(name = "descripcion", length = 255)
     private String descripcion;
 
+    @Builder.Default
     @Column(name = "estado")
     private Boolean estado = true;
 
+    @Builder.Default
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 }

@@ -47,6 +47,37 @@ spring:
             - StripPrefix=1
             - AuthenticationFilter
 
+        # ═══════════════════════════════════════════
+        # MS-VENTAS (NUEVO - AGREGAR ESTO)
+        # ═══════════════════════════════════════════
+        - id: ms-ventas-carrito
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/carrito/**
+          filters:
+            - AuthenticationFilter
+
+        - id: ms-ventas-pedidos
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/pedidos/**
+          filters:
+            - AuthenticationFilter
+
+        - id: ms-ventas-direcciones
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/direcciones/**
+          filters:
+            - AuthenticationFilter
+
+        - id: ms-ventas-metodos-pago
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/metodos-pago/**
+          filters:
+            - AuthenticationFilter
+
         - id: ms-citas
           uri: http://localhost:8081
           predicates:
@@ -54,6 +85,7 @@ spring:
           filters:
             - StripPrefix=1
             - AuthenticationFilter
+
 
       globalcors:
         cors-configurations:

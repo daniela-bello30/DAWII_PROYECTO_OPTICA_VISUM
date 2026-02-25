@@ -1,0 +1,75 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: ms-ventas
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ventas_db
+    username: postgres
+    password: Konecta1234  # ? USAR TU CONTRASEÑA
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# ============================================
+# CONFIGURACIÓN DE FEIGN CLIENT
+# ============================================
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+        logger-level: full
+
+# URLs de otros microservicios
+ms-catalogo:
+  url: http://localhost:8081
+
+# ============================================
+# EUREKA (deshabilitado para desarrollo local)
+# ============================================
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: false
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+# ============================================
+# LOGGING
+# ============================================
+logging:
+  level:
+    pe.edu.cibertec.msventas: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    feign: DEBUG
+
+# ============================================
+# SWAGGER/OPENAPI
+# ============================================
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true

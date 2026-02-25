@@ -41,6 +41,7 @@ public class Usuario {
     @Column(name = "documento_identidad", unique = true, length = 20)
     private String documentoIdentidad;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_documento")
     private TipoDocumento tipoDocumento = TipoDocumento.DNI;
@@ -52,9 +53,11 @@ public class Usuario {
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
 
+    @Builder.Default
     @Column(name = "estado")
     private Boolean estado = true;
 
+    @Builder.Default
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 

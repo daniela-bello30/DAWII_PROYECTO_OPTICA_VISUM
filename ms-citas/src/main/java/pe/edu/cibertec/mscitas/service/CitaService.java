@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.edu.cibertec.mscitas.client.AutenticacionClient; // NUEVO
+import pe.edu.cibertec.mscitas.dto.ApiResponse;
 import pe.edu.cibertec.mscitas.dto.CitaDTO;
 import pe.edu.cibertec.mscitas.dto.CitaEventoDTO;
 import pe.edu.cibertec.mscitas.dto.UsuarioDTO; // NUEVO
@@ -62,18 +63,25 @@ public class CitaService {
      */
     @Transactional
     public CitaDTO crear(CitaDTO citaDTO) {
-        log.info("Validando usuario ID: {} con ms-autenticacion", citaDTO.getIdUsuario());
+        log.info("Validando usuario ID: {} con ms-seguridad", citaDTO.getIdUsuario());
 
         // 1. VALIDACIÓN EXTERNA (Síncrona via Feign)
         try {
-            UsuarioDTO usuario = autenticacionClient.obtenerUsuario(citaDTO.getIdUsuario());
-            if (usuario == null) {
-                throw new RuntimeException("El usuario no existe en el sistema de autenticación");
+            // 1. Recibimos el objeto ApiResponse completo
+            ApiResponse<UsuarioDTO> response = autenticacionClient.obtenerUsuario(citaDTO.getIdUsuario());
+
+            // 2. Verificamos que la respuesta sea exitosa y contenga datos
+            if (response == null || !response.isSuccess() || response.getData() == null) {
+                throw new RuntimeException("El usuario no existe o no se pudo validar en ms-seguridad");
             }
+
+            // 3. Extraemos el UsuarioDTO que viene dentro de 'data'
+            UsuarioDTO usuario = response.getData();
             log.info("Usuario validado: {} {}", usuario.getNombres(), usuario.getApellidos());
+
         } catch (Exception e) {
-            log.error("Error de comunicación con ms-autenticacion: {}", e.getMessage());
-            throw new RuntimeException("No se pudo validar el usuario. Verifique si ms-autenticacion está activo.");
+            log.error("Error de comunicación con ms-seguridad: {}", e.getMessage());
+            throw new RuntimeException("Error al validar usuario: " + e.getMessage());
         }
 
         // 2. VALIDACIONES INTERNAS (Sucursal y Servicio)
