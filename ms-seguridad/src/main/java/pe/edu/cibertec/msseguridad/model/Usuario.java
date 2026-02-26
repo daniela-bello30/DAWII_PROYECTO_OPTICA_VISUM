@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 import pe.edu.cibertec.msseguridad.model.enums.TipoDocumento;
 
 import java.time.LocalDate;
@@ -43,7 +46,7 @@ public class Usuario {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_documento")
+    @Column(name = "tipo_documento", columnDefinition = "tipo_documento_enum")
     private TipoDocumento tipoDocumento = TipoDocumento.DNI;
 
     @Column(name = "fecha_nacimiento")
