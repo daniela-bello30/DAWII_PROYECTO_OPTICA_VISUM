@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ventas_db
     username: postgres
-    password: Konecta1234  # ? USAR TU CONTRASEÑA
+    password: Konecta1234  # ? USAR TU CONTRASEï¿½A
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -27,7 +27,7 @@ spring:
     password: guest
 
 # ============================================
-# CONFIGURACIÓN DE FEIGN CLIENT
+# CONFIGURACIï¿½N DE FEIGN CLIENT
 # ============================================
 feign:
   client:
@@ -48,7 +48,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    enabled: false
+    enabled: true
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}

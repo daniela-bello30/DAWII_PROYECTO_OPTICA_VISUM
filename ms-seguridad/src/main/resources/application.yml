@@ -6,7 +6,7 @@ spring:
     name: ms-seguridad
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/auth_db
+    url: jdbc:postgresql://localhost:5432/auth_db?stringtype=unspecified
     username: postgres
     password: Konecta1234
     driver-class-name: org.postgresql.Driver
@@ -59,10 +59,45 @@ security:
     - /auth/refresh
     - /actuator/**
     - /h2-console/**
+    - /swagger-ui/**
+    - /v3/api-docs/**
 
+# ============================================
+# CONFIGURACIÓN SWAGGER / SPRINGDOC OPENAPI
+# ============================================
+springdoc:
+  api-docs:
+    path: /api-docs                    # Ruta de la documentación JSON
+    enabled: true
+
+  swagger-ui:
+    path: /swagger-ui.html             # Ruta de la interfaz Swagger UI
+    enabled: true
+    operations-sorter: method          # Ordenar por método HTTP (GET, POST, etc.)
+    tags-sorter: alpha                 # Ordenar tags alfabéticamente
+    try-it-out-enabled: true           # Habilitar el botón "Try it out"
+    filter: true                       # Habilitar filtro de búsqueda
+
+    # Configuración de visualización
+    display-request-duration: true
+    default-models-expand-depth: 2
+    default-model-expand-depth: 2
+
+  # Configuración de rutas a documentar
+  paths-to-match:
+    - /auth/**
+    - /usuarios/**
+    - /roles/**
+
+  # Mostrar solo endpoints exitosos en los ejemplos
+  show-actuator: false
+
+# ============================================
+# CONFIGURACIÓN DE LOGGING
+# ============================================
 logging:
   level:
-    pe.edu.cibertec.seguridad: DEBUG
+    pe.edu.cibertec.msseguridad: DEBUG
     org.springframework.web: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE

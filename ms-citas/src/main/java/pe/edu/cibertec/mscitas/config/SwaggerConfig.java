@@ -16,7 +16,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI citasOpenAPI() {
         Server localServer = new Server();
-        localServer.setUrl("http://localhost:8082");
+        localServer.setUrl("http://localhost:8083");
         localServer.setDescription("Servidor Local");
 
         Contact contact = new Contact();

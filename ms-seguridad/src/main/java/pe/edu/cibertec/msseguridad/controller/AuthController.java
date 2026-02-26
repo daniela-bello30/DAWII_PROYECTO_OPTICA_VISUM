@@ -64,4 +64,6 @@ public class AuthController {
         authService.logout(jwtToken);
         return ResponseEntity.ok(ApiResponse.success(null, "Logout exitoso"));
     }
+
+
 }

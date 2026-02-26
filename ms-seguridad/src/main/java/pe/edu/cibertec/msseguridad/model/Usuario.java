@@ -43,7 +43,7 @@ public class Usuario {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_documento")
+    @Column(name = "tipo_documento", columnDefinition = "tipo_documento_enum")
     private TipoDocumento tipoDocumento = TipoDocumento.DNI;
 
     @Column(name = "fecha_nacimiento")
