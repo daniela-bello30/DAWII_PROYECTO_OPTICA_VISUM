@@ -39,10 +39,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/api-docs/**",
                                 "/swagger-resources/**",
-                                "/webjars/**"
-                        ).permitAll()
-                        // Endpoints públicos
-                        .requestMatchers(
+                                "/webjars/**",
                                 "/auth/login",
                                 "/auth/register",
                                 "/auth/refresh",
