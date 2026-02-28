@@ -7,18 +7,14 @@ import pe.edu.cibertec.catalogo.model.Categoria;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
-
     Optional<Categoria> findByNombre(String nombre);
-
 
     List<Categoria> findByNombreContainingIgnoreCase(String nombre);
 
-
-    List<Categoria> findByActivo(Boolean activo);
+    List<Categoria> findByEstado(Boolean estado);
 
     boolean existsByNombre(String nombre);
 }

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pe.edu.cibertec.catalogo.dto.ApiResponseDTO;
 import pe.edu.cibertec.catalogo.dto.ImagenProductoDTO;
 import pe.edu.cibertec.catalogo.service.ImagenProductoService;

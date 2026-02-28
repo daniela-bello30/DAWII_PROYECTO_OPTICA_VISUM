@@ -30,7 +30,7 @@ public class CategoriaService {
 
     @Transactional(readOnly = true)
     public List<CategoriaDTO> obtenerActivas() {
-        return categoriaRepository.findByActivo(true).stream()
+        return categoriaRepository.findByEstado(true).stream()
                 .map(categoria -> modelMapper.map(categoria, CategoriaDTO.class))
                 .collect(Collectors.toList());
     }
@@ -59,8 +59,8 @@ public class CategoriaService {
 
         Categoria categoria = modelMapper.map(categoriaDTO, Categoria.class);
 
-        if (categoria.getActivo() == null) {
-            categoria.setActivo(true);
+        if (categoria.getEstado() == null) {
+            categoria.setEstado(true);
         }
 
         Categoria categoriaGuardada = categoriaRepository.save(categoria);
@@ -81,8 +81,8 @@ public class CategoriaService {
         categoriaExistente.setNombre(categoriaDTO.getNombre());
         categoriaExistente.setDescripcion(categoriaDTO.getDescripcion());
 
-        if (categoriaDTO.getActivo() != null) {
-            categoriaExistente.setActivo(categoriaDTO.getActivo());
+        if (categoriaDTO.getEstado() != null) {
+            categoriaExistente.setEstado(categoriaDTO.getEstado());
         }
 
         Categoria categoriaActualizada = categoriaRepository.save(categoriaExistente);
@@ -94,8 +94,7 @@ public class CategoriaService {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + id));
 
-        categoria.setActivo(false);
-        categoriaRepository.save(categoria);
+        categoria.setEstado(false);
     }
 
 
@@ -111,7 +110,7 @@ public class CategoriaService {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + id));
 
-        categoria.setActivo(true);
+        categoria.setEstado(true);
         Categoria categoriaReactivada = categoriaRepository.save(categoria);
         return modelMapper.map(categoriaReactivada, CategoriaDTO.class);
     }

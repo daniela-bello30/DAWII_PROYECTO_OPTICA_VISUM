@@ -1,5 +1,6 @@
 package pe.edu.cibertec.catalogo.dto;
 
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

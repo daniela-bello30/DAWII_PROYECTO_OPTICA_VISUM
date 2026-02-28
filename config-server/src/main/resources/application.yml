@@ -5,11 +5,14 @@ spring:
   application:
     name: config-server
 
+  profiles:
+    active: native
+
   cloud:
     config:
       server:
         git:
-          # Apuntar a la carpeta config-repo en la raíz del proyecto
+          # Apuntar a la carpeta config-repo en la raï¿½z del proyecto
           uri: file:///${user.dir}/../config-repo
           clone-on-start: true
           search-paths:

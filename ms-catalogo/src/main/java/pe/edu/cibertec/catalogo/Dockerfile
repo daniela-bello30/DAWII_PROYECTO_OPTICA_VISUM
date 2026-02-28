@@ -27,8 +27,8 @@ EXPOSE 8081
 
 ENV SPRING_PROFILES_ACTIVE=docker
 ENV SERVER_PORT=8081
-ENV EUREKA_CLIENT_SERVICEURL_DEFAULTZONE="http://eureka-server:8761/eureka/"
-ENV SPRING_DATASOURCE_URL="jdbc:mysql://mysql:3306/catalogo_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+ENV EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+ENV SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/catalogo_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=root
 ENV SPRING_RABBITMQ_HOST=rabbitmq

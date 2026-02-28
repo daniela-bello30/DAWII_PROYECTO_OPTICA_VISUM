@@ -29,11 +29,14 @@ spring:
           uri: lb://ms-catalogo
           predicates:
             - Path=/api/productos/**, /api/marcas/**, /api/categorias/**
+
+              #Comentar las siguientes 5 lienas para test sin seguridad
+
           filters:
-            - name: CircuitBreaker
-              args:
-                name: catalogoCircuitBreaker
-                fallbackUri: forward:/fallback/catalogo
+          - name: CircuitBreaker
+          args:
+          name: catalogoCircuitBreaker
+          fallbackUri: forward:/fallback/catalogo
 
         # MS-VENTAS
         - id: ms-ventas

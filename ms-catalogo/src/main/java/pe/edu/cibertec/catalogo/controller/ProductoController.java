@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pe.edu.cibertec.catalogo.dto.*;
 import pe.edu.cibertec.catalogo.service.ProductoService;
 

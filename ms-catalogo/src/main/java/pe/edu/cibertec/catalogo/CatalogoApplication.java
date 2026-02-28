@@ -9,10 +9,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class MsCatalogoApplication {
+public class CatalogoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MsCatalogoApplication.class, args);
+        SpringApplication.run(CatalogoApplication.class, args);
         System.out.println("====================================");
         System.out.println("✅ MS-CATALOGO INICIADO CORRECTAMENTE");
         System.out.println("📦 Puerto: 8081");

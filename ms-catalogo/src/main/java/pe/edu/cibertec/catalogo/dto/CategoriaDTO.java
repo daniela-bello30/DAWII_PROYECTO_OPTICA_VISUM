@@ -22,7 +22,7 @@ public class CategoriaDTO {
 
     private String descripcion;
 
-    private Boolean activo;
+    private Boolean estado;
 
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;

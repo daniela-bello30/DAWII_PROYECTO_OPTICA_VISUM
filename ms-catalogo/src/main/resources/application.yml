@@ -1,2 +1,36 @@
 server:
-  port: 8088
+  port: 8081
+
+spring:
+  application:
+    name: ms-catalogo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/catalogo_db
+    username: postgres
+    password: Konecta1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud:
+    config:
+      enabled: true
+
+eureka:
+  client:
+    enabled: true
+
+logging:
+  level:
+    pe.edu.cibertec.mscatalogo: DEBUG

@@ -77,15 +77,35 @@ spring:
             - Path=/api/metodos-pago/**
           filters:
             - AuthenticationFilter
-
+        # ─────────────────────────────
+        # MS-CITAS
+        # ─────────────────────────────
         - id: ms-citas
-          uri: http://localhost:8081
+          uri: http://localhost:8083
           predicates:
             - Path=/api/citas/**
           filters:
             - StripPrefix=1
             - AuthenticationFilter
+        # ═════════════════════════════
+        # MS-CATALOGO
+        # ═════════════════════════════
 
+        # Productos (puede dejarse público si tu negocio lo permite)
+        - id: ms-catalogo-productos
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/productos/**
+          filters:
+        - AuthenticationFilter   # Activar si deseas proteger catálogo
+
+        # Categorías
+        - id: ms-catalogo-categorias
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/categorias/**
+          filters:
+        - AuthenticationFilter
 
       globalcors:
         cors-configurations:
